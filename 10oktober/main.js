@@ -53,7 +53,17 @@ function changeImageFunction(){
                 return this.src;
             },
             headlineText:"Alpaca",
-            descriptionText:"Två söta alpacor"
+            descriptionText:"Två söta alpacor",
+            button:{
+                backgroundColor: "orange"
+            },
+            container: {
+                border: "5px solid orange"
+            },
+            getSrcAsBackground: function() {
+                // url("Katt.jpg")
+                return "url(" + this.src + ")";
+            }
         },
         {
             src:"owl.jpg",
@@ -62,16 +72,38 @@ function changeImageFunction(){
                 return this.src;
             },
             headlineText:"Ugglan",
-            descriptionText:"Ugglan är trött"
+            descriptionText:"Ugglan är trött",
+            button:{
+                backgroundColor: "orange"
+            },
+            container: {
+                border: "4px solid blue"
+
+            },
+            getSrcAsBackground: function() {
+                // url("Katt.jpg")
+                return "url(" + this.src + ")";
+            }
         },
         {
             src:"parrot.jpg",
-            alt:"En färgglad pappegoja",
+            alt:"En färgglad papegoja",
             getSrc: function(){
                 return this.src;
             },
-            headlineText:"Pappegoja",
-            descriptionText:"En grön Pappegoja"
+            headlineText:"Papegoja",
+            descriptionText:"En grön Papegoja",
+            button:{
+                backgroundColor: "orange"
+            },
+            container: {
+                border: "3px solid black"
+
+            },
+            getSrcAsBackground: function() {
+                // url("Katt.jpg")
+                return "url(" + this.src + ")";
+            }
         },
     ];
 
@@ -84,20 +116,48 @@ function changeImageFunction(){
 
     
     const choosenImage = allImages[getRandomInt(allImages.length)];
-    // Sätt kitten.scr till den valda objectets scr
+    // Sätt kitten.scr till den valda objectets src
     kitten.src = choosenImage.getSrc();
     kitten.alt = choosenImage.alt;
 
     // Skapa en varabel för H1 och p
     const headline = document.getElementById("headline")
     const description = document.getElementById("description");
-    // Sätta texten till den valde objectets headline och 
+    // Sätta texten till den valde objectets headline och description
     headline.innerText = choosenImage.headlineText;
     description.innerText = choosenImage.descriptionText;
 
+    const allButtons = document.querySelectorAll("button");
+    console.log(allButtons);
+    // Loopa igenom alla buttons och sätt bakgrundsfärgen
+    // till choosenImage.button.backgroundColor
+    allButtons.forEach(function(button){
+        console.log(button);
+        button.style.backgroundColor = choosenImage.button.backgroundColor;
+    });
+    // const container = document.querySelector("div");
+    // 
+    document.querySelector("div").style.border = choosenImage.container.border;
+    
+    // Ändra bakgrunden i body-taggen till den bild vi har val
+    const bodyElement = document.querySelector("body");
+    bodyElement.style.backgroundImage = choosenImage.getSrcAsBackground();
+    // background-repeat: no-repeat
+    // background-cover: cover | contain;
+    bodyElement.style.backgroundSize = "100%";
+    bodyElement.style.backgroundRepeat = "no-repeat";
 
-}
-// Koppla en eventListener till varje button
-hideButton.addEventListener("click", showHideImage);
-widthButton.addEventListener("click", changeWidthImage);
-changeImageButton.addEventListener("click", changeImageFunction);
+
+    }
+    const timer = setInterval(showHideImage, 1000);
+    function stopTimer(){
+        clearInterval(timer);
+
+    }
+
+
+    document.querySelector("#headline"),addEventListener("click", stopTimer);
+    // Koppla en eventListener till varje button
+    hideButton.addEventListener("click", showHideImage);
+    widthButton.addEventListener("click", changeWidthImage);
+    changeImageButton.addEventListener("click", changeImageFunction);
